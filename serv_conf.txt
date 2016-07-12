@@ -1,0 +1,1 @@
+{"hostname": "127.0.0.1", "sleep_time": 1, "msg_length": 128, "nm_length": 16, "logfile": "./serv_log.txt", "max_clients": 50, "port": 90}
