@@ -7,6 +7,8 @@ import time
 import os.path
 import json
 
+CONFIG = "./serv_conf.txt";
+
 class MessageQueue:
     def __init__(self,logfile):
         self.logfile = logfile;
@@ -22,9 +24,12 @@ class MessageQueue:
                 for client in self.clientList:
                     try:
                         msg = client.conn.recv(optdict['msg_length']);
-                        msg = client.name + ": " + msg.rstrip() + "\n"; #Ensure 1 newline after all messages
-                        self.log(msg.rstrip());
-                        messageList.append(msg);
+                        if msg[:1]=='/':
+                            self.handleCommand(msg.rstrip(),client);
+                        else:
+                            msg = client.name + ": " + msg.rstrip() + "\n"; #Ensure 1 newline after all messages
+                            self.log(msg.rstrip());
+                            messageList.append(msg);
                     except socket.error:
                         pass;
                 for client in self.clientList:
@@ -47,6 +52,16 @@ class MessageQueue:
         self.log(msg);
         for client in self.clientList:
             client.conn.sendall(msg);
+    def handleCommand(self,msg,client):
+        self.log("Command entered by " + client.name);
+        if msg == "/exit":
+            client.conn.close();
+            self.clientList.remove(client);
+            self.globalMsg("User " + client.name + " has left the channel.\n");
+        elif msg == "/help":
+            client.conn.sendall("::All commands are prefaced by /\n::Type /help for this text\n::/exit to leave\n");
+        else:
+            client.conn.sendall("::Uncrecognized command. Type /help for assistace\n";
     def log(self,msg):
         currtime = self.elapsed;
         timestamp= [currtime/3600];
@@ -69,6 +84,7 @@ def newClient(conn,msgQ):
     while(msgQ.nameAlreadyExists(name)):
         conn.sendall("Error (Name already exists). Please enter a new name: ");
         name = conn.recv(optdict['nm_length']);
+    conn.sendall("Welcome to PyChat v1.3, type /help for commands and /exit to exit\n");
     msgQ.globalMsg("User " + name.rstrip() + " has joined the channel\n");
     msgQ.addClient(Client(name,conn));
 
@@ -87,9 +103,9 @@ def acceptClients(s, msgQ):
         thread.start_new_thread(newClient,(client,msgQ));
 
 
-if os.path.isfile("./serv_conf.txt"):
-    print "Found config file, reading prefrences from ./serv_conf.txt";
-    conf = open("./serv_conf.txt", 'r');
+if os.path.isfile(CONFIG):
+    print "Found config file, reading prefrences from " + CONFIG;
+    conf = open(CONFIG, 'r');
     optdict = json.loads(conf.read());
     conf.close();
 else:
@@ -103,9 +119,10 @@ else:
         'max_clients' : 50,
         'logfile' : './serv_log.txt',
         }
-    default = open("./serv_conf.txt",'w');
+    default = open(CONFIG,'w');
     default.write(json.dumps(optdict));
     default.close();
+    print "Default config written to " + CONFIG;
 
 msgQ = MessageQueue(open(optdict['logfile'],'a'));
 thread.start_new_thread(msgQ.sendAndRec,());
