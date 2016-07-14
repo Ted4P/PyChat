@@ -55,3 +55,18 @@
 [0, 0, 37] User Ted has left the channel.
 
 [0, 0, 43] John: rly?
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User Ted has joined the channel
+
+[0, 0, 3] Accepting new client...
+[0, 0, 5] User Hohn has joined the channel
+
+[0, 0, 9] Command entered by Hohn
+[0, 0, 9] User Hohn has left the channel.
+
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User Ted has joined the channel
+
+[0, 0, 3] Ctrl-c detected, server shutting down
+[0, 0, 3] Server shutting down!
+

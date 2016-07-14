@@ -61,7 +61,7 @@ class MessageQueue:
         elif msg == "/help":
             client.conn.sendall("::All commands are prefaced by /\n::Type /help for this text\n::/exit to leave\n");
         else:
-            client.conn.sendall("::Uncrecognized command. Type /help for assistace\n";
+            client.conn.sendall("::Uncrecognized command. Type /help for assistace\n");
     def log(self,msg):
         currtime = self.elapsed;
         timestamp= [currtime/3600];
@@ -74,6 +74,8 @@ class MessageQueue:
         print msg.rstrip();
 
 class Client:
+    """Hold the name and network connection for a single client
+    """
     def __init__(self, name, conn):
         self.name = name.rstrip();
         self.conn = conn;
@@ -89,8 +91,10 @@ def newClient(conn,msgQ):
     msgQ.addClient(Client(name,conn));
 
 def signal_handler(signal, frame):      #Handle graceful exit on ctrl-c
-    global s;
-    global msgQ;
+    msgQ.log("Ctrl-c detected, server shutting down");
+    msgQ.globalMsg("Server shutting down!\n");
+    for client in msgQ.clientList:
+        client.conn.close();
     s.close();
     msgQ.logfile.close();
     sys.exit(0);
