@@ -39,7 +39,7 @@ class MessageQueue:
                         except socket.error:
                             client.conn.close();
                             self.clientList.remove(client);
-                            self.log("Removing client " + client.name + "\n");
+                            self.log("Removing client " + client.name);
                 time.sleep(optdict['sleep_time']);
                 self.elapsed+=optdict['sleep_time'];
     def nameAlreadyExists(self,name):
@@ -49,7 +49,7 @@ class MessageQueue:
                     return True;
         return False;
     def globalMsg(self, msg):
-        self.log(msg);
+        self.log(msg.rstrip());
         for client in self.clientList:
             client.conn.sendall(msg);
     def handleCommand(self,msg,client):
@@ -69,7 +69,7 @@ class MessageQueue:
         timestamp.append(currtime/60);
         currtime %= 60;
         timestamp.append(currtime);
-        msg = str(timestamp) + " " + msg + "\n";
+        msg = str(timestamp) + " " + msg.rstrip() + "\n";
         self.logfile.write(msg);
         print msg.rstrip();
 
@@ -118,7 +118,7 @@ else:
         'sleep_time' : 1,
         'msg_length' : 128,
         'nm_length' : 16,
-        'hostname' : '127.0.0.1',
+        'hostname' : 'DEFAULT',
         'port' : 90,
         'max_clients' : 50,
         'logfile' : './serv_log.txt',
@@ -131,6 +131,6 @@ else:
 msgQ = MessageQueue(open(optdict['logfile'],'a'));
 thread.start_new_thread(msgQ.sendAndRec,());
 s = socket.socket();
-s.bind((optdict['hostname'],optdict['port']));
+s.bind((socket.gethostname() if optdict['hostname'] == "DEFAULT" else optdict['hostname'],optdict['port']));
 signal.signal(signal.SIGINT, signal_handler);
 acceptClients(s,msgQ);
