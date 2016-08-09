@@ -106,6 +106,12 @@ def acceptClients(s, msgQ):
         msgQ.log("Accepting new client...");
         thread.start_new_thread(newClient,(client,msgQ));
 
+def adminLoop(msgQ):
+    print "For admin commands, type \"help\"";
+    while True:
+        cmd = raw_input("::");
+        print cmd;
+
 
 if os.path.isfile(CONFIG):
     print "Found config file, reading prefrences from " + CONFIG;
@@ -133,4 +139,6 @@ thread.start_new_thread(msgQ.sendAndRec,());
 s = socket.socket();
 s.bind((socket.gethostname() if optdict['hostname'] == "DEFAULT" else optdict['hostname'],optdict['port']));
 signal.signal(signal.SIGINT, signal_handler);
-acceptClients(s,msgQ);
+thread.start_new_thread(acceptClients,(s,msgQ,));
+#acceptClients(s,msgQ);
+adminLoop(msgQ);

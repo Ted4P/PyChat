@@ -1,2 +1,26 @@
 [0, 0, 0] Ctrl-c detected, server shutting down
 [0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User Hello has joined the channel
+[0, 0, 2] Hello: sdafasd
+[0, 0, 3] Hello: sdfasd
+[0, 0, 4] Hello: sdf
+aasdf
+[0, 0, 12] Hello: ÿôÿý
+[0, 0, 13] Hello: ÿû
+[0, 0, 14] Hello: ÿôÿý
+[0, 0, 15] Hello: ÿû
+[0, 0, 19] Hello: q:q
+[0, 0, 22] Command entered by Hello
+[0, 0, 22] User Hello has left the channel.
+[0, 0, 23] Ctrl-c detected, server shutting down
+[0, 0, 23] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] For admin commands, type "help"
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
