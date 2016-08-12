@@ -62,6 +62,16 @@ class MessageQueue:
             client.conn.sendall("::All commands are prefaced by /\n::Type /help for this text\n::/exit to leave\n");
         else:
             client.conn.sendall("::Uncrecognized command. Type /help for assistace\n");
+    def kickPerson(self,name):
+        if not self.nameAlreadyExists(name):
+            self.log("Error: cannot kick " + name + ", name not found");
+        if self.clientList:
+            for client in self.clientList:
+                if client.name == name:
+                     client.conn.sendall("You have been kicked by the admin!\n");
+                     client.conn.close();
+                     self.clientList.remove(client);
+                     self.globalMsg("User " + name + " has been kicked by the admin\n");
     def log(self,msg):
         currtime = self.elapsed;
         timestamp= [currtime/3600];
@@ -76,11 +86,12 @@ class MessageQueue:
 class Client:
     """Hold the name and network connection for a single client
     """
-    def __init__(self, name, conn):
+    def __init__(self, name, conn, addr):
         self.name = name.rstrip();
         self.conn = conn;
+        self.addr = addr;
 
-def newClient(conn,msgQ):
+def newClient(conn,msgQ,addr):
     conn.sendall("Enter your name: ");
     name = conn.recv(optdict['nm_length']);
     while(msgQ.nameAlreadyExists(name)):
@@ -88,7 +99,7 @@ def newClient(conn,msgQ):
         name = conn.recv(optdict['nm_length']);
     conn.sendall("Welcome to PyChat v1.3, type /help for commands and /exit to exit\n");
     msgQ.globalMsg("User " + name.rstrip() + " has joined the channel\n");
-    msgQ.addClient(Client(name,conn));
+    msgQ.addClient(Client(name,conn,addr));
 
 def signal_handler(signal, frame):      #Handle graceful exit on ctrl-c
     msgQ.log("Ctrl-c detected, server shutting down");
@@ -104,13 +115,25 @@ def acceptClients(s, msgQ):
     while True:         #Wait for new connections, spin out new thread w/ sock, hand thread ref to msgQ
         client,addr = s.accept();
         msgQ.log("Accepting new client...");
-        thread.start_new_thread(newClient,(client,msgQ));
+        thread.start_new_thread(newClient,(client,msgQ,addr));
 
 def adminLoop(msgQ):
     print "For admin commands, type \"help\"";
     while True:
         cmd = raw_input("::");
-        print cmd;
+        if cmd == "help":
+            print "Configure the server at " + CONFIG + ". Commands:"
+            print "kick [name] to remove [name] from the channel";
+            print "shutdown to stop the server";
+            print "list to list currently connected users";
+        if cmd[:4] == "kick" and len(cmd)>5:
+            msgQ.kickPerson(cmd[5:]);
+        if cmd == "list":
+            if msgQ.clientList:
+                for client in msgQ.clientList:
+                    print "> " + client.name + "@" + str(client.addr);
+        if cmd == "shutdown":
+            signal_handler(None,None);
 
 
 if os.path.isfile(CONFIG):

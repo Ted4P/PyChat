@@ -24,3 +24,44 @@ aasdf
 [0, 0, 0] For admin commands, type "help"
 [0, 0, 0] Ctrl-c detected, server shutting down
 [0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 2] ted: sdfasdf
+[0, 0, 15] Accepting new client...
+[0, 0, 17] User jake has joined the channel
+[0, 1, 4] User ted has been kicked by the admin
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 2] Accepting new client...
+[0, 0, 3] User jake has joined the channel
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 2] Accepting new client...
+[0, 0, 3] User jake has joined the channel
+[0, 0, 8] User ted has been kicked by the admin
+[0, 0, 52] Ctrl-c detected, server shutting down
+[0, 0, 52] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User dfgs has joined the channel
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 4] ted: hello
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 21] User ted has been kicked by the admin
+[0, 0, 22] Ctrl-c detected, server shutting down
+[0, 0, 22] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
