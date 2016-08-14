@@ -3,85 +3,11 @@ import socket
 import thread
 import sys
 import signal
-import time
 import os.path
 import json
+from MessageQueue import MessageQueue
 
 CONFIG = "./serv_conf.txt";
-
-class MessageQueue:
-    def __init__(self,logfile):
-        self.logfile = logfile;
-        self.clientList = [];
-        self.elapsed = 0;
-    def addClient(self,client):
-        client.conn.setblocking(0);
-        self.clientList.append(client);
-    def sendAndRec(self):
-        while True:
-            messageList = [];
-            if self.clientList:
-                for client in self.clientList:
-                    try:
-                        msg = client.conn.recv(optdict['msg_length']);
-                        if msg[:1]=='/':
-                            self.handleCommand(msg.rstrip(),client);
-                        else:
-                            msg = client.name + ": " + msg.rstrip() + "\n"; #Ensure 1 newline after all messages
-                            self.log(msg.rstrip());
-                            messageList.append(msg);
-                    except socket.error:
-                        pass;
-                for client in self.clientList:
-                    for msg in messageList:
-                        try:
-                            client.conn.sendall(msg);
-                        except socket.error:
-                            client.conn.close();
-                            self.clientList.remove(client);
-                            self.log("Removing client " + client.name);
-                time.sleep(optdict['sleep_time']);
-                self.elapsed+=optdict['sleep_time'];
-    def nameAlreadyExists(self,name):
-        if self.clientList:
-            for client in self.clientList:
-                if client.name == name:
-                    return True;
-        return False;
-    def globalMsg(self, msg):
-        self.log(msg.rstrip());
-        for client in self.clientList:
-            client.conn.sendall(msg);
-    def handleCommand(self,msg,client):
-        self.log("Command entered by " + client.name);
-        if msg == "/exit":
-            client.conn.close();
-            self.clientList.remove(client);
-            self.globalMsg("User " + client.name + " has left the channel.\n");
-        elif msg == "/help":
-            client.conn.sendall("::All commands are prefaced by /\n::Type /help for this text\n::/exit to leave\n");
-        else:
-            client.conn.sendall("::Uncrecognized command. Type /help for assistace\n");
-    def kickPerson(self,name):
-        if not self.nameAlreadyExists(name):
-            self.log("Error: cannot kick " + name + ", name not found");
-        if self.clientList:
-            for client in self.clientList:
-                if client.name == name:
-                     client.conn.sendall("You have been kicked by the admin!\n");
-                     client.conn.close();
-                     self.clientList.remove(client);
-                     self.globalMsg("User " + name + " has been kicked by the admin\n");
-    def log(self,msg):
-        currtime = self.elapsed;
-        timestamp= [currtime/3600];
-        currtime %= 3600;
-        timestamp.append(currtime/60);
-        currtime %= 60;
-        timestamp.append(currtime);
-        msg = str(timestamp) + " " + msg.rstrip() + "\n";
-        self.logfile.write(msg);
-        print msg.rstrip();
 
 class Client:
     """Hold the name and network connection for a single client
@@ -157,11 +83,10 @@ else:
     default.close();
     print "Default config written to " + CONFIG;
 
-msgQ = MessageQueue(open(optdict['logfile'],'a'));
-thread.start_new_thread(msgQ.sendAndRec,());
+msgQ = MessageQueue(open(optdict['logfile'],'a'),optdict);
+thread.start_new_thread(msgQ.sendAndRec,());        #Iterate through connected clients and send and recieve data in thread
 s = socket.socket();
 s.bind((socket.gethostname() if optdict['hostname'] == "DEFAULT" else optdict['hostname'],optdict['port']));
 signal.signal(signal.SIGINT, signal_handler);
-thread.start_new_thread(acceptClients,(s,msgQ,));
-#acceptClients(s,msgQ);
+thread.start_new_thread(acceptClients,(s,msgQ,));           #Wait for incoming connections on specified port and add connections to messageQueue when initialized
 adminLoop(msgQ);
