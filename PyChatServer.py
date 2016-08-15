@@ -1,4 +1,4 @@
-#PyChat LAN server 1.0
+#PyChat LAN server 2.0
 import socket
 import thread
 import sys
@@ -27,7 +27,7 @@ def newClient(conn,msgQ,addr):
     msgQ.globalMsg("User " + name.rstrip() + " has joined the channel\n");
     msgQ.addClient(Client(name,conn,addr));
 
-def signal_handler(signal, frame):      #Handle graceful exit on ctrl-c
+def signal_handler(signal, frame):      #Handle graceful exit on ctrl-c 
     msgQ.log("Ctrl-c detected, server shutting down");
     msgQ.globalMsg("Server shutting down!\n");
     for client in msgQ.clientList:

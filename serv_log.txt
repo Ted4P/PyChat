@@ -1,2 +1,6 @@
 [0, 0, 0] Ctrl-c detected, server shutting down
 [0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
