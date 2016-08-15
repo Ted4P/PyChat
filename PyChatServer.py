@@ -7,7 +7,7 @@ import os.path
 import json
 from MessageQueue import MessageQueue
 
-CONFIG = "./serv_conf.txt";
+CONFIG = "serv_conf.txt";
 
 class Client:
     """Hold the name and network connection for a single client
@@ -47,6 +47,7 @@ def adminLoop(msgQ):
     print "For admin commands, type \"help\"";
     while True:
         cmd = raw_input("::");
+        msgQ.log("Admin command: " + cmd);
         if cmd == "help":
             print "Configure the server at " + CONFIG + ". Commands:"
             print "kick [name] to remove [name] from the channel";
@@ -76,7 +77,7 @@ else:
         'hostname' : 'DEFAULT',
         'port' : 90,
         'max_clients' : 50,
-        'logfile' : './serv_log.txt',
+        'logfile' : 'serv_log.txt',
         }
     default = open(CONFIG,'w');
     default.write(json.dumps(optdict));
