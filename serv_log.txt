@@ -4,3 +4,30 @@
 [0, 0, 0] Server shutting down!
 [0, 0, 0] Ctrl-c detected, server shutting down
 [0, 0, 0] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 11] Accepting new client...
+[0, 0, 16] User john has joined the channel
+[0, 0, 21] john: hello
+[0, 0, 34] Admin command: list
+[0, 0, 43] john: 
+[0, 0, 44] john: 
+[0, 0, 44] Removing client john
+[0, 0, 54] ted: helo
+[0, 0, 59] Ctrl-c detected, server shutting down
+[0, 0, 59] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 4] Command entered by ted
+[0, 0, 4] User ted has left the channel.
+[0, 0, 5] Admin command: list
+[0, 0, 5] Admin command: help
+[0, 0, 5] Ctrl-c detected, server shutting down
+[0, 0, 5] Server shutting down!
+[0, 0, 0] Accepting new client...
+[0, 0, 0] User ted has joined the channel
+[0, 0, 2] ted: ls
+[0, 0, 7] User ted command: /exit
+[0, 0, 7] User ted has left the channel.
+[0, 0, 8] Ctrl-c detected, server shutting down
+[0, 0, 8] Server shutting down!

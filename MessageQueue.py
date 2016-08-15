@@ -48,7 +48,7 @@ class MessageQueue:
         for client in self.clientList:
             client.conn.sendall(msg);
     def handleCommand(self,msg,client):
-        self.log("Command entered by " + client.name);
+        self.log("User " + client.name + " command: " + msg);
         if msg == "/exit":
             client.conn.close();
             self.clientList.remove(client);
