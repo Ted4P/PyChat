@@ -1,1 +1,1 @@
-{"msg_length": 128, "logfile": "./serv_log.txt", "nm_length": 16, "banfile": "./banned_addrs.txt", "hostname": "127.0.0.1", "max_clients": 50, "sleep_time": 1, "port": 90}
+{"msg_length": 128, "logfile": "serv_log.txt", "nm_length": 16, "banfile": "./banned_addrs.txt", "hostname": "127.0.0.1", "max_clients": 50, "sleep_time": 1, "port": 90}

@@ -31,3 +31,9 @@
 [0, 0, 7] User ted has left the channel.
 [0, 0, 8] Ctrl-c detected, server shutting down
 [0, 0, 8] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
+[0, 0, 0] Ctrl-c detected, server shutting down
+[0, 0, 0] Server shutting down!
